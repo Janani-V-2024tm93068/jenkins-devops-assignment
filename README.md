@@ -1,2 +1,2 @@
-# jenkins-devops-assinment
+# jenkins-devops-assignment
 jenkins-devops-assignment
