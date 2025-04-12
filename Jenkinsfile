@@ -4,40 +4,49 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building the application..."
-                // Simulate build commands here
+                echo 'Building the application...'
+                // You can add actual build commands here if needed
             }
         }
 
         stage('Test') {
             steps {
-                echo "Running tests..."
-                // Simulate test commands here
+                echo 'Running tests...'
+                // You can add your testing framework commands here
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                echo "Deploying to Staging..."
-                bat 'mkdir -p staging && echo "Staging Build" > staging/index.html'
+                echo 'Deploying to Staging...'
+                bat '''
+                if not exist staging (
+                    mkdir staging
+                )
+                echo Staging Build > staging\\index.html
+                '''
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo "Deploying to Production..."
-                input message: "Promote to Production?", ok: "Yes, Deploy"
-                bat 'mkdir -p production && echo "Production Build" > production/index.html'
+                echo 'Deploying to Production...'
+                bat '''
+                if not exist production (
+                    mkdir production
+                )
+                echo Production Build > production\\index.html
+                '''
             }
         }
     }
 
     post {
-        failure {
-            echo "The pipeline failed!"
-        }
         success {
-            echo "Pipeline completed successfully!"
+            echo 'The pipeline completed successfully!'
+        }
+        failure {
+            echo 'The pipeline failed!'
         }
     }
 }
