@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying to Staging..."
-                sh 'mkdir -p staging && echo "Staging Build" > staging/index.html'
+                bat 'mkdir -p staging && echo "Staging Build" > staging/index.html'
             }
         }
 
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "Deploying to Production..."
                 input message: "Promote to Production?", ok: "Yes, Deploy"
-                sh 'mkdir -p production && echo "Production Build" > production/index.html'
+                bat 'mkdir -p production && echo "Production Build" > production/index.html'
             }
         }
     }
