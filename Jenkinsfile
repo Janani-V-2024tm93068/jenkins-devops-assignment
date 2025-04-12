@@ -1,40 +1,28 @@
 pipeline {
-    agent { label 'local-agent' }
+    agent any
 
     stages {
         stage('Build') {
             steps {
-                echo 'Building the Java application...'
-                sh 'javac src/HelloWorld.java'
+                echo 'Building the project...'
+                sh 'javac HelloWorld.java'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Testing the application...'
-                sh 'echo "Tests passed!"'
+                echo 'Running tests...'
+                // Simple dummy test example
+                sh 'java HelloWorld | grep "Hello, Jenkins!"'
             }
         }
 
-        stage('Deploy to Staging') {
+        stage('Deploy') {
             steps {
-                echo 'Deploying to staging environment...'
-                sh 'echo "Staging deployed"'
+                echo 'Deploying the application...'
+                // Simulate deploy (you can copy to a folder or just print message)
+                sh 'cp HelloWorld.class /tmp/' // or any dummy deploy step
             }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                input message: 'Approve deployment to production?'
-                echo 'Deploying to production environment...'
-                sh 'echo "Production deployed"'
-            }
-        }
-    }
-
-    post {
-        failure {
-            echo 'Build failed! Sending alert...'
         }
     }
 }
