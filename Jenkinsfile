@@ -5,48 +5,39 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building the application..."
-                // Insert your build commands here
+                // Simulate build commands here
             }
         }
-        
+
         stage('Test') {
             steps {
                 echo "Running tests..."
-                // Insert your test commands here
+                // Simulate test commands here
             }
         }
 
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying to Staging..."
-                // Insert your staging deployment commands here
+                sh 'mkdir -p staging && echo "Staging Build" > staging/index.html'
             }
         }
 
         stage('Deploy to Production') {
             steps {
                 echo "Deploying to Production..."
-                // Insert your production deployment commands here
+                input message: "Promote to Production?", ok: "Yes, Deploy"
+                sh 'mkdir -p production && echo "Production Build" > production/index.html'
             }
         }
     }
 
     post {
         failure {
-            echo "The build failed. Please check the logs for more details."
-            // You can add more actions here to notify you in case of failure
-            // Example: send an email or a Slack message
-            mail to: '2024tm93068@wilp.bits-pilani.ac.in', subject: 'Jenkins Build Failed', body: 'The build has failed. Please investigate.'
-            // or send Slack notifications
-            // slackSend channel: '#your-channel', message: 'Build failed!'
+            echo "The pipeline failed!"
         }
-        
         success {
-            echo "The pipeline completed successfully!"
-        }
-
-        unstable {
-            echo "The build is unstable. Some tests may have failed."
+            echo "Pipeline completed successfully!"
         }
     }
 }
